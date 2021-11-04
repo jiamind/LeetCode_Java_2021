@@ -3,7 +3,7 @@
  */
 public class LongestPalindromicSubstring {
     // dp[i][j]: true if substring from index i to j (inclusive) is palindromic.
-    public String longestPalindrome(String s) {
+    public String longestPalindrome_dp(String s) {
         if (s.length() == 0) return "";
         int startIndex = 0, endIndex = 0;
         boolean[][] dp = new boolean[s.length()][s.length()];
@@ -43,5 +43,41 @@ public class LongestPalindromicSubstring {
         }
 
         return s.substring(startIndex, endIndex + 1);
+    }
+
+    public String longestPalindrome(String s) {
+        if (s.length() == 0) return s;
+
+        int startIndex = 0, endIndex = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int[] odd = palindromeHalfLength(s, i, i);
+            int[] even = palindromeHalfLength(s, i, i + 1);
+            if (odd[1] - odd[0] > endIndex - startIndex) {
+                startIndex = odd[0];
+                endIndex = odd[1];
+            }
+
+            if (even[1] > even[0] && even[1] - even[0] > endIndex - startIndex) {
+                startIndex = even[0];
+                endIndex = even[1];
+            }
+        }
+
+        return s.substring(startIndex, endIndex + 1);
+    }
+
+    private int[] palindromeHalfLength(String s, int leftIndex, int rightIndex) {
+        int[] indexes = new int[2];
+        int i = 0;
+        for (; leftIndex - i >= 0 && rightIndex + i < s.length(); i++) {
+            if (s.charAt(leftIndex-i) != s.charAt(rightIndex+i)) {
+                indexes[0] = leftIndex-i + 1;
+                indexes[1] = rightIndex+i -1;
+                return indexes;
+            }
+        }
+        indexes[0] = leftIndex-i + 1;
+        indexes[1] = rightIndex+i -1;
+        return indexes;
     }
 }
