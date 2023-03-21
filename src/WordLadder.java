@@ -6,6 +6,18 @@ import java.util.Set;
 
 /**
  * 127. Word Ladder
+ * Idea: BFS. Start from the beginWord and put it in a queue, 
+ * take a word from the queue, enumerate all possible next words and put them in the queue.
+ * Repeat the process until a match tot the endWord is found.
+ * Time complexity: 
+ * |- Need to visit each one of the word in the wordlist;
+ * |- For each char in the word, replace it with all possible characters
+ * |- Therefore: M is length of word, N is number of words. O(N * M)
+ * Space complexity: 
+ * |- <Set> wordSet: O(N * M)
+ * |- <Set> visited: O(N * M)
+ * |- <Queue> level: O(N * M)
+ * |- O(N * M)
  */
 public class WordLadder {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
@@ -38,7 +50,9 @@ public class WordLadder {
                         StringBuilder sb = new StringBuilder(currentWord);
                         for (int k = 0; k < 26; k++) {
                             sb.setCharAt(j, (char) ('a' + k));
-                            if (wordSet.contains(sb.toString())) level.add(sb.toString());
+                            if (wordSet.contains(sb.toString()) && !visited.contains(sb.toString())) {
+                                level.add(sb.toString());
+                            }
                         }
                     }
                 }
