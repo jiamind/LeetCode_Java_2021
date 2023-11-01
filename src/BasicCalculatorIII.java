@@ -4,14 +4,14 @@ import java.util.Stack;
  * 772. Basic Calculator III
  * Idea: treat input as a sum of sum components. 
  * |- treat "()" as a new input. 
- * |- evaluate when we read a operator:
+ * |- evaluate when we read an operator:
  * |- if prev operator is '+', add it to the stack
  * |- if prev operator is '-', * -1 then add it to the stack
  * |- if prev operator is '*' or '/', retreive the previous result and apply the operator
  * Time complexity:
  * |- iterate through each input, do a substring O(N * N)
  * |- while stack not empty, pop: O(N)
- * |- Therefore, O(N^2). Can be optimized to 0(N) if pass start and end index of the string
+ * |- Therefore, O(N^2). Can be optimized to O(N) if pass start and end index of the string
  * Space complexity:
  * |- <Stack> stack: O(N)
  */
